@@ -1,16 +1,17 @@
 ﻿using Domain.Helper;
 using Domain.Models;
+using Newtonsoft.Json;
 
 namespace Domain.Service;
 
 
-public interface IRequestService<T>
+public interface IRequestService<TBody, UExpectedResponse>
 {
-	Task<ResponseDTO> SendRequest(HttpProviderRequest<T> request);
+	Task<ResponseDTO> SendRequest(RequestDTO<TBody, UExpectedResponse> request);
 }
 
 
-public class RequestService<TBody> : IRequestService<TBody>
+public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, UExpectedResponse>
 {
 	private readonly IHttpProvider httpProvider;
 	private readonly NeoBankContext context;
@@ -21,26 +22,26 @@ public class RequestService<TBody> : IRequestService<TBody>
 		this.context = context;
 	}
 
-
-	public async Task<ResponseDTO> SendRequest(HttpProviderRequest<TBody> request)
+	public async Task<ResponseDTO> SendRequest(RequestDTO<TBody, UExpectedResponse> request)
 	{
-		request.BaseAddress = request.BaseAddress ?? Constant.URL;
-		request.ScenarioId = request.ScenarioId;
-		request.PBIId = request.PBIId;
-		request.TestCaseId = request.TestCaseId;
-		request.Uri = request.Uri;
-		request.ServiceType = request.ServiceType;
-		request.HeaderParameters = request.HeaderParameters;
-		request.Body = request.Body;
-		request.ExpectedResult = request.ExpectedResult;
-		request.ExpectedStatus = request.ExpectedStatus;
+		HttpProviderRequest<TBody> httpRequest = new HttpProviderRequest<TBody>
+		{
+			BaseAddress = request.BaseAddress ?? Constant.URL,
+			ScenarioId = request.ScenarioId,
+			PBIId = request.PBIId,
+			TestCaseId = request.TestCaseId,
+			Uri = request.Uri,
+			ServiceType = request.ServiceType,
+			HeaderParameters = request.HeaderParameters,
+			Body = request.Body
+		};
 
 
 		ResponseDTO result = null;
 		switch (request.ServiceType)
 		{
 			case Models.RequestType.Post:
-				result = await httpProvider.PostAsync(request);
+				result = await httpProvider.PostAsync(httpRequest);
 				break;
 			case Models.RequestType.Get:
 				break;
@@ -54,24 +55,26 @@ public class RequestService<TBody> : IRequestService<TBody>
 				break;
 		}
 
-		await context.ServiceCallLogs.AddAsync(new ServiceCallLog
+		if (result != request.ExpectedResult)
 		{
-			ServiceCallUrl = request.Uri,
-			ScenarioId = request.ScenarioId,
-			PBIId = request.PBIId,
-			TestCaseId = request.TestCaseId,
-			RequestBody = result.ResponseBody,
-			ServiceCallDate = DateTime.Now,
-			CreationUserId = 1,
-			ExpectedResult = request.ExpectedResult,
-			ExpectedStatus = request.ExpectedStatus,
-			ResponseBody= result.ResponseBody,
-			ServiceCallStatus=result.ResponseStatus
-		});
-		await context.SaveChangesAsync();
+			await context.ServiceCallLogs.AddAsync(new ServiceCallLog
+			{
+				ServiceCallUrl = request.Uri,
+				ScenarioId = request.ScenarioId,
+				PBIId = request.PBIId,
+				TestCaseId = request.TestCaseId,
+				RequestBody = result.ResponseBody,
+				ServiceCallDate = DateTime.Now,
+				CreationUserId = 1,
+				ExpectedResult = JsonConvert.SerializeObject(request),
+				ExpectedStatus = request.ExpectedStatus ?? 0,
+				ResponseBody = result.ResponseBody,
+				ServiceCallStatus = result.ResponseStatus
+			});
+			await context.SaveChangesAsync();
+		}
 
-
-
-		return await Task.FromResult(result);
+		return result;
 	}
 }
+

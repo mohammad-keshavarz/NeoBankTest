@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Models.Authenticate
 {
-	public class LoginResponseDTO
+	public class LoginResponseDTO : ResponseDTO
 	{
 		public string Token{ get; set; }
 	}

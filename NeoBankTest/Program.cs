@@ -1,4 +1,6 @@
-using Domain.Helper;
+﻿using Domain.Helper;
+using Domain.Models;
+using Domain.Models.Authenticate;
 using Domain.Service;
 using Hangfire;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +17,8 @@ builder.Services.AddDbContext<NeoBankContext>(options => options.UseSqlServer(co
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IHttpProvider, HttpProvider>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped(typeof(IRequestService<>), typeof(RequestService <>));
+
+builder.Services.AddTransient(typeof(IRequestService<,>), typeof(RequestService<,>));
 
 builder.Services.AddHangfire(configuration => configuration
 	.UseSimpleAssemblyNameTypeSerializer()

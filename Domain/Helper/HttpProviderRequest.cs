@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Domain.Models.Authenticate;
 
 namespace Domain.Helper;
 
@@ -16,7 +17,12 @@ public class HttpProviderRequest<T>
 
 	public T? Body { get; set; }
 
-	public string? ExpectedResult { get; set; }
+	//public U? ExpectedResult { get; set; }
 
-	public int ExpectedStatus { get; set; }
+	//public int? ExpectedStatus { get; set; }
+
+/*	public static implicit operator HttpProviderRequest<T, U>(HttpProviderRequest<LoginRequestDTO> v)
+	{
+		throw new NotImplementedException();
+	}*/
 }
