@@ -43,7 +43,7 @@ namespace NeoBankTest.Controllers
 			return Ok(res);*/
 		//}
 
-		[HttpGet(Name = "login/automate")]
+		[HttpGet(Name = "automation/api/authentication/login")]
 		public async Task<IActionResult> loginAutomate()
 		{
 			var testCases = LoginTestCases.LoginTestList;
@@ -65,6 +65,15 @@ namespace NeoBankTest.Controllers
 				};
 				var res = await _RequestService.SendRequest(request);
 			}
+			return Ok();
+
+		}
+		[HttpGet(Name = "automation/api/register/re")]
+		public async Task<IActionResult> registerAutomate()
+		{
+			var testCases = LoginTestCases.LoginTestList;
+
+
 			return Ok();
 
 		}

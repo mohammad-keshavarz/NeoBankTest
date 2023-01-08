@@ -19,9 +19,9 @@ loginTestCaseList[0]= new TestCaseDTO<>
 	public static List<RequestDTO<dynamic, dynamic>> LoginTestList { get; } = new()
 	{
 		new RequestDTO<dynamic, dynamic> {
-			TestCaseId = 123,
-			ScenarioId = 7897,
-			PBIId = 12,
+			PBIId = 14007,
+			ScenarioId = 0,
+			TestCaseId = 14116,
 			Uri = "authentication/login",
 
 			ExpectedStatus = 200,
@@ -36,6 +36,29 @@ loginTestCaseList[0]= new TestCaseDTO<>
 				action= "Panel1",
 				succeeded= true,
 				errors= "null"
+			},
+			ServiceType = RequestType.Post
+		},
+		new RequestDTO<dynamic, dynamic>
+		{
+			PBIId = 14007,
+			ScenarioId = 0,
+			TestCaseId = 14116,
+			Uri = "authentication/login",
+
+			ExpectedStatus = 200,
+			Body = new
+			{
+				nationalCode = "001-301320-3",
+				password = "Elh@m121169"
+			},
+			ExpectedResult = new
+			{
+				data = "null",
+				message = "null",
+				action = "Panel1",
+				succeeded = true,
+				errors = "null"
 			},
 			ServiceType = RequestType.Post
 		},

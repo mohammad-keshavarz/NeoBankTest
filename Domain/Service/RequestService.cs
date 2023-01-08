@@ -59,15 +59,20 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
 
         var unexpectedResultList = compareObjects(request.ExpectedResult, result.ResponseBody.ToString());
 
-        var wrongResults="";
+        var wrongResults = "";
         var isSuccess = true;
-        if (unexpectedResultList.Count  > 0)
+        if (unexpectedResultList.Count > 0)
         {
-            foreach(string unexpectedResult in unexpectedResultList )
+            foreach (string unexpectedResult in unexpectedResultList)
             {
-                wrongResults += unexpectedResult ; 
+                wrongResults += unexpectedResult;
             }
-            isSuccess=false;
+            isSuccess = false;
+        }
+        if (request.ExpectedStatus != result.ResponseStatus)
+        {
+            isSuccess = false;
+           // wrongResults += unexpectedResultList.Add(" { \"prop\" : status \"expectedValue\" : " + request.ExpectedStatus + " \"actualValue\" : " + result.ResponseStatus);
         }
 
         {
@@ -106,14 +111,14 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
         var unexpectedResultList = new List<string?>();
         foreach (var expected in expectedList)
         {
-            var expectedProperty= JsonConvert.SerializeObject(expectedResponse.GetType().GetProperty(expected).GetValue(expectedResponse)).ToLower().Replace("\""," ").Trim();
+            var expectedProperty = JsonConvert.SerializeObject(expectedResponse.GetType().GetProperty(expected).GetValue(expectedResponse)).ToLower().Replace("\"", " ").Trim();
             var targetProperty = JsonConvert.SerializeObject(d[expected.ToString()]).ToLower().ToLower().Replace("\"", " ").Trim();
             if (targetProperty != expectedProperty)
             {
-                unexpectedResultList.Add(" { \"prop\" : "+expected + " \"expectedValue\" : "+ expectedProperty + " \"actualValue\" : " + targetProperty);
+                unexpectedResultList.Add(" { \"prop\" : " + expected + " \"expectedValue\" : " + expectedProperty + " \"actualValue\" : " + targetProperty);
                 //unexpectedResultList.Add(targetProperty);
             }
-            
+
             //unexpectedResultList.Add(targetProperty.));
         }
         /*		if (!list1.SequenceEqual(list2))
