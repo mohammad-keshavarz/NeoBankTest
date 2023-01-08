@@ -69,7 +69,6 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
             }
             isSuccess=false;
         }
-        
 
         {
             await context.ServiceCallLogs.AddAsync(new ServiceCallLog
