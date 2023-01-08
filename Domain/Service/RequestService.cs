@@ -1,5 +1,6 @@
 ﻿using Domain.Helper;
 using Domain.Models;
+using Domain.Models.TestDTO;
 using Dynamitey;
 using Newtonsoft.Json;
 
@@ -58,22 +59,29 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
         var responseBody = "";
         var wrongResults = "";
         var isSuccess = true;
+        var unexpectedResultList = new List<UnexpectedResultDTO>();
         if (result != null)
         {
             responseBody = result.ResponseBody.ToString();
-            var unexpectedResultList = compareObjects(request.ExpectedResult, responseBody);
+            unexpectedResultList = compareObjects(request.ExpectedResult, responseBody);
 
 
 
             if (unexpectedResultList.Count > 0 || result.ResponseStatus != request.ExpectedStatus)
             {
-                foreach (string unexpectedResult in unexpectedResultList)
+/*                foreach (string unexpectedResult in unexpectedResultList)
                 {
                     wrongResults += unexpectedResult;
-                }
+                }*/
                 if (result.ResponseStatus != request.ExpectedStatus)
                 {
-                    wrongResults += " { \"prop\" : \"" + "requestStatus" + "\", \"expectedValue\" : \"" + request.ExpectedStatus + "\", \"actualValue\" : \"" + result.ResponseStatus + "\" },";
+                    unexpectedResultList.Add(
+                        new UnexpectedResultDTO { Property = "RequestStatus",
+                         ActualValue= request.ExpectedStatus.ToString() ,
+                         ExpectedValue= result.ResponseStatus.ToString() ,
+                        }
+                        );;
+                     //wrongResults += " { \"prop\" : \"" + "requestStatus" + "\", \"expectedValue\" : \"" + request.ExpectedStatus + "\", \"actualValue\" : \"" + result.ResponseStatus + "\" },";
 
                 }
                 isSuccess = false;
@@ -99,7 +107,7 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
                 ExpectedStatus = request.ExpectedStatus ?? 0,
                 //ResponseBody = result.ResponseBody,
                 ServiceCallStatus = result.ResponseStatus,
-                WronResult = wrongResults,
+                WronResult = JsonConvert.SerializeObject(unexpectedResultList),
                 isSuccess = isSuccess,
                 CreationDate= DateTime.Now,
             });
@@ -110,7 +118,7 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
         return result;
     }
 
-    List<string?> compareObjects(object expectedResponse, string response)
+    List<UnexpectedResultDTO?> compareObjects(object expectedResponse, string response)
     {
         dynamic d = JsonConvert.DeserializeObject<dynamic>(response);
 
@@ -127,7 +135,7 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
 
         }
 
-        var unexpectedResultList = new List<string?>();
+        var unexpectedResultList = new List<UnexpectedResultDTO?>();
         foreach (var expected in expectedList)
         {
             var expectedProperty = JsonConvert.SerializeObject(expectedResponse.GetType().GetProperty(expected).GetValue(expectedResponse)).ToLower().Replace("\"", " ").Replace(" ", "");
@@ -139,22 +147,16 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
 
             if (targetProperty != expectedProperty)
             {
-                unexpectedResultList.Add(" { \"prop\" : \" " + expected + "\", \"expectedValue\" : \"" + expectedProperty + "\", \"actualValue\" : \"" + targetProperty + "\" },");
-                //unexpectedResultList.Add(targetProperty);
+                unexpectedResultList.Add(new UnexpectedResultDTO
+                {
+                    Property = expected,
+                    ActualValue= targetProperty,
+                    ExpectedValue= expectedProperty
+                });
+
             }
 
-            //unexpectedResultList.Add(targetProperty.));
         }
-        /*		if (!list1.SequenceEqual(list2))
-                    return false;
-
-                foreach (var memberName in list1)
-                {
-                    if (!Dynamic.InvokeGet(expectedResponse, memberName).Equals(Dynamic.InvokeGet(response, memberName)))
-                    {
-                        return false;
-                    }
-                }*/
         return unexpectedResultList;
 
     }
