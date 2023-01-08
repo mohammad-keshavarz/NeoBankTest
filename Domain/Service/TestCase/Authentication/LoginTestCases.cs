@@ -33,35 +33,59 @@ loginTestCaseList[0]= new TestCaseDTO<>
 			{
                 data = "null",
 				message= "null",
-				action= "Panel1",
+				action= "Panel",
 				succeeded= true,
 				errors= "null"
 			},
 			ServiceType = RequestType.Post
 		},
-		new RequestDTO<dynamic, dynamic>
-		{
-			PBIId = 14007,
+
+		new RequestDTO<dynamic, dynamic> {
+			TestCaseId = 14119,
 			ScenarioId = 0,
-			TestCaseId = 14116,
+			PBIId = 14007,
 			Uri = "authentication/login",
 
 			ExpectedStatus = 200,
-			Body = new
-			{
-				nationalCode = "001-301320-3",
-				password = "Elh@m121169"
+			Body = new {
+				nationalCode= "0013013203",
+				password = "Elh@m1211693"
 			},
 			ExpectedResult = new
 			{
 				data = "null",
-				message = "null",
-				action = "Panel1",
-				succeeded = true,
-				errors = "null"
+				message= "null",
+				action= "Panel",
+				succeeded= true,
+				errors= "null"
 			},
 			ServiceType = RequestType.Post
 		},
+
+		new RequestDTO<dynamic, dynamic> {
+			TestCaseId = 14021,
+			ScenarioId = 14117,
+			PBIId = 14007,
+			Uri = "authentication/login",
+
+			ExpectedStatus = 200,
+			Body = new {
+				nationalCode= "001301320",
+				password = "Elh@m1211693"
+			},
+			ExpectedResult = new
+			{
+				data = "null",
+				message= "null",
+				action= "Panel",
+				succeeded= true,
+				errors= "null"
+			},
+			ServiceType = RequestType.Post
+		},
+
+
+
 	};
 
 
@@ -69,45 +93,4 @@ loginTestCaseList[0]= new TestCaseDTO<>
 
 
 
-	/*public TestCaseDTO<LoginRequestDTO, LoginResponseDTO> testCaseLogin(TestCaseDTO<LoginRequestDTO, LoginResponseDTO> test)
-	{
-
-		LoginRequestDTO body = new LoginRequestDTO()
-		{
-			NationalCode = "0013013203",
-			Password = "Elh@m121169"
-		};
-		LoginResponseDTO response = new LoginResponseDTO()
-		{
-
-		};
-
-
-		RequestDTO<LoginRequestDTO, ResponseDTO> requestDTO = new()
-		{
-			TestCaseId = 123,
-			ScenarioId = 7897,
-			PBIId = 12,
-			Uri = "autentication/login",
-			ExpectedResult = { 
-				ResponseHeader  
-			},
-			ExpectedStatus = 200,
-			Body = body,
-			ServiceType = RequestType.Post
-		};
-
-
-		test.TestCaseId = 123;
-		test.ScenarioId = 7897;
-		test.PBIId = 12;
-		test.Uri = "autentication/login";
-		test.ExpectedResult = response;
-		test.ExpectedStatus = 200;
-		test.Body = body;
-		test.ServiceType = 200;
-
-
-		return test;
-	}*/
 }
