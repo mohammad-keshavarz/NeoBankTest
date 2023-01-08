@@ -27,7 +27,7 @@ namespace NeoBankTest.Controllers
 		public async Task<IActionResult> loginAutomate()
 		{
 			var testCases = LoginTestCases.LoginTestList;
-
+			var testResult = new List<dynamic?>();
 			foreach (var testCase in testCases)
 			{
 				var request = new RequestDTO<dynamic,dynamic>
@@ -44,8 +44,9 @@ namespace NeoBankTest.Controllers
 
 				};
 				var res = await _RequestService.SendRequest(request);
+				testResult.Add(res);
 			}
-			return Ok();
+			return Ok(testResult);
 
 		}
 		/*[HttpGet(Name = "automation/api/register/re")]

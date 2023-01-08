@@ -19,6 +19,7 @@ loginTestCaseList[0]= new TestCaseDTO<>
             Uri = "authentication/login",
 
             ExpectedStatus = 200,
+            ServiceType = RequestType.Post,
             Body = new
             {
                 nationalCode = "0013013203",
@@ -32,7 +33,7 @@ loginTestCaseList[0]= new TestCaseDTO<>
                 succeeded = true,
                 errors = "null"
             },
-            ServiceType = RequestType.Post
+            
         },
 
         new RequestDTO<dynamic, dynamic>
@@ -43,6 +44,7 @@ loginTestCaseList[0]= new TestCaseDTO<>
             Uri = "authentication/login",
 
             ExpectedStatus = 200,
+            ServiceType = RequestType.Post,
             Body = new
             {
                 nationalCode = "0013013203",
@@ -56,7 +58,7 @@ loginTestCaseList[0]= new TestCaseDTO<>
                 succeeded = true,
                 errors = "null"
             },
-            ServiceType = RequestType.Post
+            
         },
 
         new RequestDTO<dynamic, dynamic>
@@ -72,6 +74,7 @@ loginTestCaseList[0]= new TestCaseDTO<>
                 nationalCode = "1234567890",
                 password = "Elh@m1211693"
             },
+            ServiceType = RequestType.Post,
             ExpectedResult = new
             {
                 data = "null",
@@ -89,7 +92,7 @@ loginTestCaseList[0]= new TestCaseDTO<>
                     },
                 },
             },
-            ServiceType = RequestType.Post
+            
         }
     };
 
