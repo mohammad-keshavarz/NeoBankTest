@@ -14,18 +14,18 @@ namespace NeoBankTest.Controllers
 	{
 		private readonly ILogger<AuthenticationController> _logger;
 		private readonly IUserService _userService;
-		private readonly IRequestService<LoginRequestDTO, LoginResponseDTO> _RequestService;
-		public AuthenticationController(ILogger<AuthenticationController> logger, IUserService userService, IRequestService<LoginRequestDTO, LoginResponseDTO> requestService)
+		private readonly IRequestService<dynamic, dynamic> _RequestService;
+		public AuthenticationController(ILogger<AuthenticationController> logger, IUserService userService, IRequestService<dynamic, dynamic> requestService)
 		{
 			_logger = logger;
 			_userService = userService;
 			_RequestService = requestService;
 		}
 
-		[HttpPost(Name = "login")]
-		public async Task<IActionResult> login(LoginRequestDTO body)
-		{
-			var request = new RequestDTO<LoginRequestDTO,>
+		//[HttpPost(Name = "login")]
+		//public async Task<IActionResult> login(LoginRequestDTO body)
+		//{
+		/*	var request = new RequestDTO<dynamic,dynamic>
 			{
 				BaseAddress = Constant.URL,
 				Body = body,
@@ -40,8 +40,8 @@ namespace NeoBankTest.Controllers
 			};
 
 			var res = await _RequestService.SendRequest(request);
-			return Ok(res);
-		}
+			return Ok(res);*/
+		//}
 
 		[HttpGet(Name = "login/automate")]
 		public async Task<IActionResult> loginAutomate()

@@ -22,15 +22,20 @@ loginTestCaseList[0]= new TestCaseDTO<>
 			TestCaseId = 123,
 			ScenarioId = 7897,
 			PBIId = 12,
-			Uri = "autentication/login",
+			Uri = "authentication/login",
 
 			ExpectedStatus = 200,
 			Body = new {
-				NationalCode= "0013013203",
-				Password = "Elh@m121169"
+				nationalCode= "0013013203",
+				password = "Elh@m121169"
 			},
-			ExpectedResult = new {
-				Token=""
+			ExpectedResult = new
+			{
+                data = "null",
+				message= "null",
+				action= "Panel1",
+				succeeded= true,
+				errors= "null"
 			},
 			ServiceType = RequestType.Post
 		},
