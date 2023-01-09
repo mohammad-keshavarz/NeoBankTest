@@ -54,7 +54,7 @@ loginTestCaseList[0]= new TestCaseDTO<>
             {
                 data = "null",
                 message = "null",
-                action = "Panel1",
+                action = "panel",
                 succeeded = true,
                 errors = "null"
             },
