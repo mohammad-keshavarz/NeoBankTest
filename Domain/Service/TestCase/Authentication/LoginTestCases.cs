@@ -18,7 +18,7 @@ loginTestCaseList[0]= new TestCaseDTO<>
 			TestCaseId = 14021,
 			Uri = "authentication/login",
 
-			ExpectedStatus = 200,
+			ExpectedStatus = 400,
 			ServiceType = RequestType.Post,
 			Body = new
 			{
@@ -29,49 +29,42 @@ loginTestCaseList[0]= new TestCaseDTO<>
 			{
 				data = "null",
 				message = "null",
-				action = "Panel",
-				succeeded = true,
-				errors = "null"
-			},
+				action = "null",
+				succeeded = false,
+				errors = new[]
+				{
+				new{
+					message= "طول مقدار وارده برای فیلد کد ملی بایستی در بازه 10 تا 10 باشد",
+					code= "null",
+					reference= "NationalCode",
+					info= "null",
+					value= "null"
+
+					},
+				new{
+					message= "مقدار وارد شده برای فیلد کد ملی معتبر نمی باشد",
+					code= "null",
+					reference= "NationalCode",
+					info= "null",
+					value= "null"
+					},
+
+
+				},
+			 }
 
 		},
+
+
 
 		new RequestDTO<dynamic, dynamic>
-		{
-			TestCaseId = 14022,
-			ScenarioId = 14117,
-			PBIId = 14007,
-			Uri = "authentication/login",
-
-			ExpectedStatus = 200,
-			ServiceType = RequestType.Post,
-			Body = new
-			{
-				nationalCode = "0013013203",
-				password = "Elh@m1211693"
-			},
-			ExpectedResult = new
-			{
-				data = "null",
-				message = "null",
-				action = "Panel",
-				succeeded = true,
-				errors = "null"
-			},
-
-		},
-
-
-
-
-		 new RequestDTO<dynamic, dynamic>
 		{
 			TestCaseId = 14023,
 			ScenarioId = 14117,
 			PBIId = 14007,
 			Uri = "authentication/login",
 
-			ExpectedStatus = 200,
+			ExpectedStatus = 400,
 			ServiceType = RequestType.Post,
 			Body = new
 			{
@@ -82,54 +75,40 @@ loginTestCaseList[0]= new TestCaseDTO<>
 			{
 				data = "null",
 				message = "null",
-				action = "Panel",
-				succeeded = true,
-				errors = "null"
-			},
+				action = "null",
+				succeeded = false,
+				errors = new[]
+				{
+				new{
+					message= "طول مقدار وارده برای فیلد کد ملی بایستی در بازه 10 تا 10 باشد",
+					code= "null",
+					reference= "NationalCode",
+					info= "null",
+					value= "null"
+
+					},
+				new{
+					message= "مقدار وارد شده برای فیلد کد ملی معتبر نمی باشد",
+					code= "null",
+					reference= "NationalCode",
+					info= "null",
+					value= "null"
+					},
+
+
+				},
+			 }
 
 		},
 
-
-
-
-		  new RequestDTO<dynamic, dynamic>
-		{
-			TestCaseId = 14024,
-			ScenarioId = 14117,
-			PBIId = 14007,
-			Uri = "authentication/login",
-
-			ExpectedStatus = 200,
-			ServiceType = RequestType.Post,
-			Body = new
-			{
-				nationalCode = "0013013203A",
-				password = "Elh@m1211693"
-			},
-			ExpectedResult = new
-			{
-				data = "null",
-				message = "null",
-				action = "Panel",
-				succeeded = true,
-				errors = "null"
-			},
-
-		},
-
-
-
-
-
-
-		   new RequestDTO<dynamic, dynamic>
+		new RequestDTO<dynamic, dynamic>
 		{
 			TestCaseId = 14026,
 			ScenarioId = 14117,
 			PBIId = 14007,
 			Uri = "authentication/login",
 
-			ExpectedStatus = 200,
+			ExpectedStatus = 400,
 			ServiceType = RequestType.Post,
 			Body = new
 			{
@@ -140,21 +119,40 @@ loginTestCaseList[0]= new TestCaseDTO<>
 			{
 				data = "null",
 				message = "null",
-				action = "Panel",
-				succeeded = true,
-				errors = "null"
-			},
+				action = "null",
+				succeeded = false,
+				errors = new[]
+				{
+				new{
+					message= "طول مقدار وارده برای فیلد کد ملی بایستی در بازه 10 تا 10 باشد",
+					code= "null",
+					reference= "NationalCode",
+					info= "null",
+					value= "null"
+
+					},
+				new{
+					message= "مقدار وارد شده برای فیلد کد ملی معتبر نمی باشد",
+					code= "null",
+					reference= "NationalCode",
+					info= "null",
+					value= "null"
+					},
+
+
+				},
+			 }
 
 		},
 
-			  new RequestDTO<dynamic, dynamic>
+		new RequestDTO<dynamic, dynamic>
 		{
 			TestCaseId = 14027,
 			ScenarioId = 14117,
 			PBIId = 14007,
 			Uri = "authentication/login",
 
-			ExpectedStatus = 200,
+			ExpectedStatus = 400,
 			ServiceType = RequestType.Post,
 			Body = new
 			{
@@ -165,22 +163,40 @@ loginTestCaseList[0]= new TestCaseDTO<>
 			{
 				data = "null",
 				message = "null",
-				action = "Panel",
-				succeeded = true,
-				errors = "null"
-			},
+				action = "null",
+				succeeded = false,
+				errors = new[]
+				{
+				new{
+					message= "طول مقدار وارده برای فیلد کد ملی بایستی در بازه 10 تا 10 باشد",
+					code= "null",
+					reference= "NationalCode",
+					info= "null",
+					value= "null"
+
+					},
+				new{
+					message= "مقدار وارد شده برای فیلد کد ملی معتبر نمی باشد",
+					code= "null",
+					reference= "NationalCode",
+					info= "null",
+					value= "null"
+					},
+
+
+				},
+			 }
 
 		},
 
-
-					new RequestDTO<dynamic, dynamic>
+		new RequestDTO<dynamic, dynamic>
 		{
 			TestCaseId = 14318,
 			ScenarioId = 14117,
 			PBIId = 14007,
 			Uri = "authentication/login",
 
-			ExpectedStatus = 200,
+			ExpectedStatus = 400,
 			ServiceType = RequestType.Post,
 			Body = new
 			{
@@ -191,16 +207,31 @@ loginTestCaseList[0]= new TestCaseDTO<>
 			{
 				data = "null",
 				message = "null",
-				action = "Panel",
-				succeeded = true,
-				errors = "null"
-			},
+				action = "null",
+				succeeded = false,
+				errors = new[]
+				{
+				new{
+					message= "طول مقدار وارده برای فیلد کد ملی بایستی در بازه 10 تا 10 باشد",
+					code= "null",
+					reference= "NationalCode",
+					info= "null",
+					value= "null"
 
-		},
+					},
+				new{
+					message= "مقدار وارد شده برای فیلد کد ملی معتبر نمی باشد",
+					code= "null",
+					reference= "NationalCode",
+					info= "null",
+					value= "null"
+					},
 
 
+				},
+			 }
 
-
+					},
 
 		new RequestDTO<dynamic, dynamic>
 		{
@@ -224,22 +255,77 @@ loginTestCaseList[0]= new TestCaseDTO<>
 				succeeded = false,
 				errors = new[]
 				{
-					new {
-						message = "مقدار وارد شده برای فیلد کد ملی معتبر نمی باشد",
-						code = "null",
-						reference = "NationalCode",
-						info = "null",
-						value = "null"
+				new{
+					message= "مقدار وارد شده برای فیلد کد ملی معتبر نمی باشد",
+					code= "null",
+					reference= "NationalCode",
+					info= "null",
+					value= "null"
 					},
+
+
 				},
+			 }
+		},
+		new RequestDTO<dynamic, dynamic>
+		{
+			TestCaseId = 14024,
+			ScenarioId = 14117,
+			PBIId = 14007,
+			Uri = "authentication/login",
+
+			ExpectedStatus = 400,
+			ServiceType = RequestType.Post,
+			Body = new
+			{
+				nationalCode = "0013013203A",
+				password = "Elh@m1211693"
 			},
+			ExpectedResult = new
+			{
+				data = "null",
+				message = "null",
+				action = "null",
+				succeeded = false,
+				errors = new[]
+				{
+				new{
+					message= "طول مقدار وارده برای فیلد کد ملی بایستی در بازه 10 تا 10 باشد",
+					code= "null",
+					reference= "NationalCode",
+					info= "null",
+					value= "null"
 
-		}
+					},
+				new{
+					message= "مقدار وارد شده برای فیلد کد ملی معتبر نمی باشد",
+					code= "null",
+					reference= "NationalCode",
+					info= "null",
+					value= "null"
+					},
+
+
+				},
+			 }
+
+
+		},
 	};
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
