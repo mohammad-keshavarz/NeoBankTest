@@ -79,8 +79,8 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
                         new UnexpectedResultDTO
                         {
                             Property = "RequestStatus",
-                            ActualValue = request.ExpectedStatus.ToString(),
-                            ExpectedValue = result.ResponseStatus.ToString(),
+							ExpectedValue = request.ExpectedStatus.ToString(),
+                            ActualValue = result.ResponseStatus.ToString(),
                         }
                         ); ;
                     //wrongResults += " { \"prop\" : \"" + "requestStatus" + "\", \"expectedValue\" : \"" + request.ExpectedStatus + "\", \"actualValue\" : \"" + result.ResponseStatus + "\" },";
@@ -160,11 +160,11 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
         var unexpectedResultList = new List<UnexpectedResultDTO?>();
         foreach (var expected in expectedList)
         {
-            var expectedProperty = JsonConvert.SerializeObject(expectedResponse.GetType().GetProperty(expected).GetValue(expectedResponse)).ToLower().Replace("\"", " ").Replace(" ", "");
+            var expectedProperty = JsonConvert.SerializeObject(expectedResponse.GetType().GetProperty(expected).GetValue(expectedResponse)).ToLower().Replace("\"", " ").Replace(" ", "").Replace("null", "");
             var targetProperty = "";
             if (response != "")
             {
-                targetProperty = JsonConvert.SerializeObject(d[expected.ToString()]).ToLower().Replace("\"", " ").Replace(" ", "");
+                targetProperty = JsonConvert.SerializeObject(d[expected.ToString()]).ToLower().Replace("\"", " ").Replace(" ", "").Replace("null", "");
             }
 
             if (targetProperty != expectedProperty)

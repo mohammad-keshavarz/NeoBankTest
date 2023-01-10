@@ -54,7 +54,7 @@ loginTestCaseList[0]= new TestCaseDTO<>
 			{
 				data = "null",
 				message = "null",
-				action = "Panel1",
+				action = "Panel",
 				succeeded = true,
 				errors = "null"
 			},
@@ -82,7 +82,7 @@ loginTestCaseList[0]= new TestCaseDTO<>
 			{
 				data = "null",
 				message = "null",
-				action = "Panel1",
+				action = "Panel",
 				succeeded = true,
 				errors = "null"
 			},
@@ -110,7 +110,7 @@ loginTestCaseList[0]= new TestCaseDTO<>
 			{
 				data = "null",
 				message = "null",
-				action = "Panel1",
+				action = "Panel",
 				succeeded = true,
 				errors = "null"
 			},
@@ -140,7 +140,7 @@ loginTestCaseList[0]= new TestCaseDTO<>
 			{
 				data = "null",
 				message = "null",
-				action = "Panel1",
+				action = "Panel",
 				succeeded = true,
 				errors = "null"
 			},
@@ -165,7 +165,7 @@ loginTestCaseList[0]= new TestCaseDTO<>
 			{
 				data = "null",
 				message = "null",
-				action = "Panel1",
+				action = "Panel",
 				succeeded = true,
 				errors = "null"
 			},
@@ -191,7 +191,7 @@ loginTestCaseList[0]= new TestCaseDTO<>
 			{
 				data = "null",
 				message = "null",
-				action = "Panel1",
+				action = "Panel",
 				succeeded = true,
 				errors = "null"
 			},
