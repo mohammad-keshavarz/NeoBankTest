@@ -9,7 +9,7 @@ namespace Domain.Service;
 
 public interface IRequestService<TBody, UExpectedResponse>
 {
-    Task<ResponseDTO> SendRequest(RequestDTO<TBody, UExpectedResponse> request);
+    Task<TestResultDTO> SendRequest(RequestDTO<TBody, UExpectedResponse> request);
 }
 
 
@@ -24,7 +24,7 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
         this.context = context;
     }
 
-    public async Task<ResponseDTO> SendRequest(RequestDTO<TBody, UExpectedResponse> request)
+    public async Task<TestResultDTO> SendRequest(RequestDTO<TBody, UExpectedResponse> request)
     {
         HttpProviderRequest<TBody> httpRequest = new HttpProviderRequest<TBody>
         {
@@ -57,7 +57,7 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
                 break;
         }
         var responseBody = "";
-        var wrongResults = "";
+
         var isSuccess = true;
         var unexpectedResultList = new List<UnexpectedResultDTO>();
         if (result != null)
@@ -69,19 +69,21 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
 
             if (unexpectedResultList.Count > 0 || result.ResponseStatus != request.ExpectedStatus)
             {
-/*                foreach (string unexpectedResult in unexpectedResultList)
-                {
-                    wrongResults += unexpectedResult;
-                }*/
+                /*                foreach (string unexpectedResult in unexpectedResultList)
+                                {
+                                    wrongResults += unexpectedResult;
+                                }*/
                 if (result.ResponseStatus != request.ExpectedStatus)
                 {
                     unexpectedResultList.Add(
-                        new UnexpectedResultDTO { Property = "RequestStatus",
-                         ActualValue= request.ExpectedStatus.ToString() ,
-                         ExpectedValue= result.ResponseStatus.ToString() ,
+                        new UnexpectedResultDTO
+                        {
+                            Property = "RequestStatus",
+                            ActualValue = request.ExpectedStatus.ToString(),
+                            ExpectedValue = result.ResponseStatus.ToString(),
                         }
-                        );;
-                     //wrongResults += " { \"prop\" : \"" + "requestStatus" + "\", \"expectedValue\" : \"" + request.ExpectedStatus + "\", \"actualValue\" : \"" + result.ResponseStatus + "\" },";
+                        ); ;
+                    //wrongResults += " { \"prop\" : \"" + "requestStatus" + "\", \"expectedValue\" : \"" + request.ExpectedStatus + "\", \"actualValue\" : \"" + result.ResponseStatus + "\" },";
 
                 }
                 isSuccess = false;
@@ -89,12 +91,18 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
         }
         else
         {
-            wrongResults = "no response";
+            unexpectedResultList.Add(new UnexpectedResultDTO()
+            {
+                Property = "Response",
+                ExpectedValue = "some response",
+                ActualValue = "no response"
+            });
             isSuccess = false;
 
         }
         {
-            await context.ServiceCallLogs.AddAsync(new ServiceCallLog
+
+            var item = new ServiceCallLog
             {
                 ServiceCallUrl = request.Uri,
                 ScenarioId = request.ScenarioId,
@@ -109,13 +117,27 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
                 ServiceCallStatus = result.ResponseStatus,
                 WronResult = JsonConvert.SerializeObject(unexpectedResultList),
                 isSuccess = isSuccess,
-                CreationDate= DateTime.Now,
-            });
+                CreationDate = DateTime.Now,
+            };
+
+            await context.ServiceCallLogs.AddAsync(item);
             await context.SaveChangesAsync();
+
+            return new TestResultDTO()
+            {
+                ScenarioId = request.ScenarioId,
+                PBIId = request.PBIId,
+                TestCaseID = request.TestCaseId,
+                IsSuccess = isSuccess,
+                WrongResults = unexpectedResultList,
+                TestDbId = item.Id,
+                Time = TimeOnly.FromDateTime(item.CreationDate)
+
+            };
         }
 
 
-        return result;
+
     }
 
     List<UnexpectedResultDTO?> compareObjects(object expectedResponse, string response)
@@ -150,8 +172,8 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
                 unexpectedResultList.Add(new UnexpectedResultDTO
                 {
                     Property = expected,
-                    ActualValue= targetProperty,
-                    ExpectedValue= expectedProperty
+                    ActualValue = targetProperty,
+                    ExpectedValue = expectedProperty
                 });
 
             }

@@ -8,6 +8,13 @@ namespace Domain.Models.TestDTO
 {
     public class TestResultDTO
     {
-        public int testCaseID { get; set; }
+        public int? TestCaseID { get; set; }
+        public int? PBIId { get; set; }
+        public int? ScenarioId { get; set; }
+        public bool IsSuccess { get; set; }
+        public long TestDbId { get; set; }
+        public TimeOnly Time { get; set; }
+        public List<UnexpectedResultDTO>? WrongResults { get; set; }
+
     }
 }
