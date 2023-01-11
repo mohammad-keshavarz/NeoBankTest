@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Domain.Models.Azure;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Helper;
@@ -11,4 +12,5 @@ public class NeoBankContext : DbContext
 
 	// DataSets
 	public DbSet<ServiceCallLog> ServiceCallLogs { get; set; }
+	public DbSet<WorkItem> PBIs{ get; set; }
 }
