@@ -12,5 +12,5 @@ public class NeoBankContext : DbContext
 
 	// DataSets
 	public DbSet<ServiceCallLog> ServiceCallLogs { get; set; }
-	public DbSet<WorkItem> PBIs{ get; set; }
+	public DbSet<WorkItem> WorkItems{ get; set; }
 }

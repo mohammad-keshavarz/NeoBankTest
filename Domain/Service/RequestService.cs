@@ -29,9 +29,9 @@ public class RequestService<TBody, UExpectedResponse> : IRequestService<TBody, U
         HttpProviderRequest<TBody> httpRequest = new HttpProviderRequest<TBody>
         {
             BaseAddress = request.BaseAddress ?? Constant.URL,
-            ScenarioId = request.ScenarioId,
+/*            ScenarioId = request.ScenarioId,
             PBIId = request.PBIId,
-            TestCaseId = request.TestCaseId,
+            TestCaseId = request.TestCaseId,*/
             Uri = request.Uri,
             ServiceType = request.ServiceType,
             HeaderParameters = request.HeaderParameters,

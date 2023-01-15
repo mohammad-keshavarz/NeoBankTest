@@ -68,7 +68,7 @@ public class HttpProvider : IHttpProvider
 		}
 	}
 
-	public async Task<TResponse> GetAsync<TBody, TResponse>(HttpProviderRequest<TBody> request)
+	public async Task<ResponseDTO> GetAsync<TBody>(HttpProviderRequest<TBody> request)
 	{
 		try
 		{
@@ -93,7 +93,13 @@ public class HttpProvider : IHttpProvider
 
 			var response = await client.GetAsync(new Uri(request.Uri));
 
-			return await response.Content.ReadAsAsync<TResponse>();
+			//return await response.Content.ReadAsAsync<TResponse>();
+			return new ResponseDTO
+			{
+				ResponseBody = await response.Content.ReadAsStringAsync(),
+				ResponseStatus = (int)response.StatusCode,
+				ResponseHeader = JsonSerializer.Serialize(response.Headers),
+			};
 		}
 		catch (Exception ex)
 		{

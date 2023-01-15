@@ -7,5 +7,5 @@ public interface IHttpProvider
 {
 	Task<ResponseDTO?> PostAsync<TBody>(HttpProviderRequest<TBody> request);
 
-	Task<TResponse> GetAsync<TBody, TResponse>(HttpProviderRequest<TBody> requestl);
+	Task<ResponseDTO> GetAsync<TBody>(HttpProviderRequest<TBody> request);
 }

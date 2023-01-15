@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Models.Enum
 {
-    public enum WorkItemType
+    public enum WorkItemTypes
     {
         Epic,
         Feature,

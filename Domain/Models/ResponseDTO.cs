@@ -11,7 +11,7 @@ namespace Domain.Models
 	{
 		public int ResponseStatus { get; set; }
 		public string ResponseHeader{ get; set; }
-		public object ResponseBody{ get; set; }
+		public dynamic ResponseBody{ get; set; }
 
 		public HttpWebResponse httpWebResponse { get; set; }
 	}

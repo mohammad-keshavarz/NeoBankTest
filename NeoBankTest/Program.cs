@@ -2,6 +2,7 @@
 using Domain.Models;
 using Domain.Models.Authenticate;
 using Domain.Service;
+using Domain.Service.Azure;
 using Hangfire;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,9 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<IHttpProvider, HttpProvider>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-builder.Services.AddTransient(typeof(IRequestService<,>), typeof(RequestService<,>));
+builder.Services.AddScoped(typeof(IRequestService<,>), typeof(RequestService<,>));
+builder.Services.AddScoped(typeof(IAzureRequestService<,>), typeof(AzureRequestService<,>));
+builder.Services.AddScoped(typeof(IAzureService<,>), typeof(AzureService<,>));
 
 builder.Services.AddHangfire(configuration => configuration
 	.UseSimpleAssemblyNameTypeSerializer()
