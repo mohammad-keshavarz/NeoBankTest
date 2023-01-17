@@ -1,4 +1,5 @@
-﻿using Domain.Models.Enum;
+﻿using Domain.Models.Entity;
+using Domain.Models.Enum;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,7 +7,7 @@ namespace Domain.Models.Azure;
 
 [Table(nameof(WorkItem))]
 
-public class WorkItem
+public class WorkItem : EntityClass
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -23,7 +24,6 @@ public class WorkItem
     public WorkItemTypes WorkItemTypeId { get; set; }
 
     public WorkItemState StateId { get; set; }
-
 
     public DateTime? WorkItemCreatedDate { get; set; }
 

@@ -2,7 +2,9 @@
 using Domain.Models.Azure;
 using Domain.Models.DTO.Azure;
 using Domain.Models.Enum;
+using Domain.Models.Repository;
 using System.Text.Json;
+
 
 namespace Domain.Service.Azure
 {
@@ -13,22 +15,24 @@ namespace Domain.Service.Azure
 
     public class AzureService<T, U> : IAzureService<T, U>
     {
-
-        private readonly IHttpProvider httpProvider;
-        private readonly NeoBankContext context;
+        private readonly IGenericRepository<WorkItem> workItemRepository;
         private readonly IAzureRequestService<T, U> azureRequestService;
+        private readonly IUnitOfWork unitOfWork;
 
-        public AzureService(IHttpProvider httpProvider, NeoBankContext context, IAzureRequestService<T, U> azureRequestService)
+        public AzureService(IAzureRequestService<T, U> azureRequestService, IGenericRepository<WorkItem> workItemRepository, IUnitOfWork unitOfWork)
         {
-            this.httpProvider = httpProvider;
-            this.context = context;
             this.azureRequestService = azureRequestService;
+            this.workItemRepository = workItemRepository;
+            this.unitOfWork = unitOfWork;
         }
+
         public async Task<dynamic> GetWorkItem(List<int> workItems)
         {
             try
             {
-                var dbWorkItems = context.WorkItems.Where(i => workItems.Contains(i.WorkItemId));
+                //var dbWorkItems = await workItemRepository.Search(i => workItems.Contains(i.WorkItemId));
+                var dbWorkItems = await workItemRepository.GetAll();
+                //var dbWorkItems = unitOfWork.WorkItemRepository.Get( workItemid: "Department");
                 var dbWorkItemIds = new List<int>();
                 foreach (var dbWorkItem in dbWorkItems)
                 {
@@ -67,8 +71,10 @@ namespace Domain.Service.Azure
                         Enum.TryParse(responseBody.fields.SystemState, true, out resultWorkItemState);
                         fetchedWorkItem.StateId = resultWorkItemState;
 
-                        await context.WorkItems.AddAsync(fetchedWorkItem);
-                        await context.SaveChangesAsync();
+                        //await context.WorkItems.AddAsync(fetchedWorkItem);
+                        await workItemRepository.Add(fetchedWorkItem);
+                        unitOfWork.Commit();
+                        //await context.SaveChangesAsync();
                         fetchedWorkItems.Add(fetchedWorkItem);
 
                     }

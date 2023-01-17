@@ -6,7 +6,8 @@ namespace Domain.Helper;
 
 public class NeoBankContext : DbContext
 {
-	public NeoBankContext(DbContextOptions<NeoBankContext> options)
+
+    public NeoBankContext(DbContextOptions<NeoBankContext> options)
 		: base(options) { }
 
 

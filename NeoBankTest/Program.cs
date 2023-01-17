@@ -1,5 +1,6 @@
 ﻿using Domain.Helper;
 using Domain.Models;
+using Domain.Models.Repository;
 using Domain.Models.Authenticate;
 using Domain.Service;
 using Domain.Service.Azure;
@@ -13,15 +14,22 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("AppDb");
-builder.Services.AddDbContext<NeoBankContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<NeoBankContext>(options =>
+{
+	options.UseSqlServer(connectionString);
+}, ServiceLifetime.Transient);
 
 builder.Services.AddHttpClient();
-builder.Services.AddScoped<IHttpProvider, HttpProvider>();
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<NeoBankContext>();
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-builder.Services.AddScoped(typeof(IRequestService<,>), typeof(RequestService<,>));
-builder.Services.AddScoped(typeof(IAzureRequestService<,>), typeof(AzureRequestService<,>));
-builder.Services.AddScoped(typeof(IAzureService<,>), typeof(AzureService<,>));
+builder.Services.AddTransient<IHttpProvider, HttpProvider>();
+builder.Services.AddTransient<IUserService, UserService>();
+
+builder.Services.AddTransient(typeof(IRequestService<,>), typeof(RequestService<,>));
+builder.Services.AddTransient(typeof(IAzureRequestService<,>), typeof(AzureRequestService<,>));
+builder.Services.AddTransient(typeof(IAzureService<,>), typeof(AzureService<,>));
 
 builder.Services.AddHangfire(configuration => configuration
 	.UseSimpleAssemblyNameTypeSerializer()

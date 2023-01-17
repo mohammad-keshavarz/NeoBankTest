@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Domain.Models.Entity;
 
 namespace Domain.Models;
 
 
 [Table(nameof(ServiceCallLog))]
-public class ServiceCallLog
+public class ServiceCallLog : EntityClass
 {
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]

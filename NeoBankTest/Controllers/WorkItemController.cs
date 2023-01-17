@@ -33,7 +33,7 @@ namespace NeoBankTest.Controllers
         public  async Task<dynamic> Get(int id)
         {
             var workItemList = new List<int>(id) { id};
-            var workItem =  _AzureService.GetWorkItem(workItemList);
+            var workItem =  await _AzureService.GetWorkItem(workItemList);
             return workItem;
         }
 
