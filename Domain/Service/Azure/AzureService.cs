@@ -4,7 +4,7 @@ using Domain.Models.DTO.Azure;
 using Domain.Models.Enum;
 using Domain.Models.Repository;
 using System.Text.Json;
-
+using System.Text.RegularExpressions;
 
 namespace Domain.Service.Azure
 {
@@ -26,13 +26,16 @@ namespace Domain.Service.Azure
             this.unitOfWork = unitOfWork;
         }
 
+        private string RemoveSpace(string body)
+        {
+            return Regex.Replace(body, @"\s+", "");
+        }
+
         public async Task<dynamic> GetWorkItem(List<int> workItems)
         {
             try
             {
-                //var dbWorkItems = await workItemRepository.Search(i => workItems.Contains(i.WorkItemId));
-                var dbWorkItems = await workItemRepository.GetAll();
-                //var dbWorkItems = unitOfWork.WorkItemRepository.Get( workItemid: "Department");
+                var dbWorkItems = await workItemRepository.Search(i => workItems.Contains(i.WorkItemId));
                 var dbWorkItemIds = new List<int>();
                 foreach (var dbWorkItem in dbWorkItems)
                 {
@@ -64,11 +67,11 @@ namespace Domain.Service.Azure
                             Title = responseBody.fields.SystemTitle,
                         };
                         WorkItemTypes resultWorkItemTypeId = WorkItemTypes.Bug;
-                        Enum.TryParse(responseBody.fields.SystemWorkItemType, true, out resultWorkItemTypeId);
+                        Enum.TryParse(RemoveSpace(responseBody.fields.SystemWorkItemType), true, out resultWorkItemTypeId);
                         fetchedWorkItem.WorkItemTypeId = resultWorkItemTypeId;
 
                         WorkItemState resultWorkItemState = WorkItemState.newWorkItem;
-                        Enum.TryParse(responseBody.fields.SystemState, true, out resultWorkItemState);
+                        Enum.TryParse(RemoveSpace(responseBody.fields.SystemState), true, out resultWorkItemState);
                         fetchedWorkItem.StateId = resultWorkItemState;
 
                         //await context.WorkItems.AddAsync(fetchedWorkItem);
@@ -79,8 +82,8 @@ namespace Domain.Service.Azure
 
                     }
                 }
-                //if (dbWorkItems == null) { return null; }
-                return fetchedWorkItems;
+                
+                return await workItemRepository.Search(i => workItems.Contains(i.WorkItemId));
             }
             catch (Exception exc)
             {

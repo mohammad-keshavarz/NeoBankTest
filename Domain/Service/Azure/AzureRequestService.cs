@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Domain.Service.Azure
 {
+   
     public interface IAzureRequestService<TBody, UExpectedResponse>
     {
         Task<ResponseDTO> Request(AzureRequestDTO<dynamic> request);
@@ -22,6 +24,10 @@ namespace Domain.Service.Azure
         {
             this.httpProvider = httpProvider;
             this.context = context;
+        }
+        private string RemoveSpace(string body)
+        {
+            return Regex.Replace(body, @"\s+", "");
         }
         public async Task<ResponseDTO> Request(AzureRequestDTO<dynamic> request )
         {
