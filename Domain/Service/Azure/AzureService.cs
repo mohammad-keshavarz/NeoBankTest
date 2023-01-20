@@ -82,7 +82,7 @@ namespace Domain.Service.Azure
 
                     }
                 }
-                
+                //if (dbWorkItems == null) { return null; }
                 return await workItemRepository.Search(i => workItems.Contains(i.WorkItemId));
             }
             catch (Exception exc)

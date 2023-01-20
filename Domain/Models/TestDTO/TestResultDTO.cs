@@ -9,7 +9,9 @@ namespace Domain.Models.TestDTO
     public class TestResultDTO
     {
         public int? TestCaseID { get; set; }
+        public string? TestCaseTitle { get; set; }
         public int? PBIId { get; set; }
+        public string? PBITitle { get; set; }
         public int? ScenarioId { get; set; }
         public bool IsSuccess { get; set; }
         public long TestDbId { get; set; }

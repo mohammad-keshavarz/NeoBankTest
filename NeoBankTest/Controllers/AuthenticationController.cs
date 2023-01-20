@@ -33,11 +33,12 @@ namespace NeoBankTest.Controllers
         {
             var testCases = LoginTestCases.LoginTestList;
             var testPlanResult = new TestPlanResultDTO();
-            var workItemIds = testCases.Select(i =>i.TestCaseId).ToList();
-            var x= workItemIds.Concat(testCases.Select(i =>i.PBIId).ToList());
-            var workItem = await _AzureService.GetWorkItem(workItemIds);
+            var testCaseIds = testCases.Select(i =>i.TestCaseId).ToList();
+            var workItemIds= testCaseIds.Concat(testCases.Select(i =>i.PBIId)).ToList();
+            List<WorkItem> workItems = await _AzureService.GetWorkItem(workItemIds);
             foreach (var testCase in testCases)
             {
+                WorkItem workItem = workItems.Find(i => i.WorkItemId == testCase.TestCaseId);
                 var request = new RequestDTO<dynamic, dynamic>
                 {
                     BaseAddress = Constant.URL ?? Constant.URL,
@@ -49,9 +50,11 @@ namespace NeoBankTest.Controllers
                     ServiceType = testCase.ServiceType,
                     ExpectedResult = testCase.ExpectedResult,
                     ExpectedStatus = testCase.ExpectedStatus,
+                   
 
                 };
-                var res = await _RequestService.SendRequest(request);
+                TestResultDTO res = await _RequestService.SendRequest(request);
+                res.TestCaseTitle = workItem.Title;
                 if (res.IsSuccess == true)
                 {
                     testPlanResult.PassedTestCases!.Add(res);
